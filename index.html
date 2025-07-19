@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodieExpress - Food Delivery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showHomePage()">🍕 FoodieExpress</a>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search for food..." id="searchInput">
+                <button class="search-btn" onclick="searchFood()">Search</button>
+            </div>
+            <ul class="nav-links">
+                <li><a onclick="showHomePage()">Home</a></li>
+                <li><a onclick="showMenu()">Menu</a></li>
+                <li><a onclick="showOrders()">Orders</a></li>
+            </ul>
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <div id="homePage">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1>Delicious Food Delivered</h1>
+                <p>Order your favorite meals from the best restaurants in your area. Fast delivery, fresh ingredients,
+                    amazing taste!</p>
+            </section>
+
+            <!-- Categories -->
+            <section class="categories">
+                <h2 class="section-title">Browse by Category</h2>
+                <div class="category-grid">
+                    <div class="category-card" onclick="filterByCategory('pizza')">
+                        <div class="category-icon">🍕</div>
+                        <div class="category-name">Pizza</div>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('burger')">
+                        <div class="category-icon">🍔</div>
+                        <div class="category-name">Burgers</div>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('dessert')">
+                        <div class="category-icon">🍰</div>
+                        <div class="category-name">Desserts</div>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('drinks')">
+                        <div class="category-icon">🥤</div>
+                        <div class="category-name">Drinks</div>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('chinese')">
+                        <div class="category-icon">🍜</div>
+                        <div class="category-name">Chinese</div>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('indian')">
+                        <div class="category-icon">🍛</div>
+                        <div class="category-name">Indian</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Food Items -->
+            <section class="food-section">
+                <h2 class="section-title">Popular Items</h2>
+                <div class="food-grid" id="foodGrid">
+                    <!-- Food items will be populated here -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Checkout Page -->
+        <div id="checkoutPage" class="checkout-page">
+            <h2 class="section-title">Checkout</h2>
+            <div class="checkout-form">
+                <h3>Delivery Information</h3>
+                <form id="orderForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Delivery Address *</label>
+                        <textarea id="address" rows="3" required
+                            placeholder="Enter your full delivery address..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method *</label>
+                        <select id="paymentMethod" required>
+                            <option value="">Select Payment Method</option>
+                            <option value="cod">Cash on Delivery</option>
+                            <option value="card">Credit/Debit Card</option>
+                            <option value="upi">UPI</option>
+                            <option value="wallet">Digital Wallet</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialInstructions">Special Instructions</label>
+                        <textarea id="specialInstructions" rows="2"
+                            placeholder="Any special requests or instructions..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <div id="checkoutItems"></div>
+                <div class="total-amount" id="checkoutTotal">Total: ₹0</div>
+                <button class="place-order-btn" onclick="placeOrder()">Place Order</button>
+            </div>
+        </div>
+
+        <!-- Order Confirmation -->
+        <div id="orderConfirmation" class="order-confirmation">
+            <div class="success-icon">✅</div>
+            <h2>Order Placed Successfully!</h2>
+            <p>Thank you for your order. Your food will be delivered soon.</p>
+            <div class="order-number" id="orderNumber">Order #: ORD123456</div>
+            <p>Estimated delivery time: <strong>30-45 minutes</strong></p>
+            <button class="add-btn" onclick="showHomePage()" style="margin-top: 2rem;">Continue Shopping</button>
+        </div>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3 class="cart-title">Your Cart</h3>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p style="text-align: center; color: #7f8c8d; padding: 2rem;">Your cart is empty</p>
+        </div>
+        <div class="cart-total">
+            <div class="total-amount" id="cartTotal">Total: ₹0</div>
+            <button class="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Help</a>
+            </div>
+            <p>&copy; 2025 FoodieExpress. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="logic.js"></script>
+</body>
+
+</html>
